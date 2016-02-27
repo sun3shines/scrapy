@@ -1,0 +1,99 @@
+urllib2.urlopen
+
+搜集知乎上所有和爬虫相关的技术了。是的。然后总和，和总结了。是的。
+
+
+使用代理，，爬，现在。
+
+    <span style="font-size:18px;">import urllib2  
+    proxy_support = urllib2.ProxyHandler({'http':'http://XX.XX.XX.XX:XXXX'})  
+    opener = urllib2.build_opener(proxy_support, urllib2.HTTPHandler)  
+    urllib2.install_opener(opener)  
+    content = urllib2.urlopen('http://XXXX').read()</span>  
+
+
+    <span style="font-size:18px;">import urllib, urllister  
+      
+    def getURL(url):  
+        try:  
+            usock = urllib.urlopen(url)  
+        except:  
+            print 'get url excepton'  
+            return []  
+        parser = urllister.URLLister()  
+        parser.feed(usock.read())  
+        usock.close()  
+        parser.close()  
+        urls = parser.urls  
+        return urls</span>  
+
+
+    <span style="font-size:18px;">import urllib2  
+    content = urllib2.urlopen('http://XXXX').read()</span>  
+
+
+还是需要培养我们自己的想法。小的想法从一点一点的开始了。等其发挥了变化了，进行了溢出后，再谋其他了。所以就从最简单，最小的功能开始了。
+
+培养我们的主旋律。
+
+如何选择最小，也是一个问题啊。不能一上来就特别大了。否则被扯淡了。就。是的。
+
+进阶发展一。从零开始进阶列表。
+
+抓取第一个页面。
+先搞好代理，和安全工作。至于内容后续考虑。比如说header，浏览器的header等。
+
+先搞好防爬虫机制。这个搞的好了后，在搞批量了。是的。所以说，先一个个页面的页面的搞了。是的。在一个一次抓取的页面中，把所有的内容都搞好了。比如说cookie，和header，和代理了。是的。确实是比较费脑子的。不想别人那样想写就写了。
+
+然后搞代理了。 都在一次任务中完成了。 包括x-forworade等的关键字了。
+
+
+然后多个代理同时抓取了。是的。
+
+
+目标网站CSDN
+
+尤其要先做好安全工作，被封号了，就扯淡了。是的。
+
+学习各种的库。是的。
+
+研究下几个urllib2 等的库，然后研究下反反爬虫的机制。
+
+关于urllib2中的几个对象的理解？opener？和builder?
+
+读书读书，文章内部内容的分析。
+
+研究知乎上的爬虫技术了。
+
+知乎上的爬虫学习，不是其有多巅峰，而是其能为我们产生效益了。是的。关键是要看代码的风格了。是的。
+
+接触新鲜事物，接触和消化的过程中，接触和消化并且实践，就是牛逼了。所以，还是需要非常的投入的。是的。
+
+首先就是要做好安全工作了。是的。是的。等到世界的变化了。最重要了。
+
+还是要自己写一个HTTP服务器。自己解析了？
+
+持续的投入，引起了事情的变化和溢出了。但是阅读，不会引起变化了。只有投入，和实践，会引起事情的变化了。是的。
+
+所以啊，就是干了。晚上回去，做点事情，引起事情的变化了。而不是我们阅读，只能引起我们心情的变化了。是的。
+
+所以啊，还是要等着事情的溢出了。搜寻所有的事情的了。是的。
+
+因为有年轻，所以要把时间多多的投入了。是的。
+
+github上写帐号，然后多个同时工作了。是的。不同分支来搞了。是的。
+
+通过自己的干，来让事情发生变化了。是的。发挥学习的能力。
+
+爬虫中，我们接触的都是新的内容。但是不要有畏惧。是的。有投入就有变化，有变化，就有进步了。是的。
+
+难的是不能长久的投入了。
+
+build_opener默认添加几个处理器，但提供快捷的方法来添加或更新默认处理器。 什么鬼？以及parent ？？
+
+学习的时候，不能直接上知乎。因为没有教程，需要一个教程，先从小到大的去养了。
+
+我们不学习，是因为我们要对其进行深入研究了？而不是利用其的结果了？
+貌似是啊。
+
+
