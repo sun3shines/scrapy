@@ -96,6 +96,8 @@ build_opener默认添加几个处理器，但提供快捷的方法来添加或�
 我们不学习，是因为我们要对其进行深入研究了？而不是利用其的结果了？
 貌似是啊。
 
+create database scrapy;
 
+create table link( id bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,url text NOT NULL,time datetime,state int NOT NULL);
 
 
