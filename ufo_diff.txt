@@ -100,4 +100,12 @@ create database scrapy;
 
 create table link( id bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,url text NOT NULL,time datetime,state int NOT NULL);
 
+时间，获取后还是需要重新更新的。
+
+代码continue太多，可读性，不好如何解决？
+
+现在的关键是如何构建一个模型了。一个加速的模型了。决策模型了。是的。
+目前的策略，就是如果没有达到关键node的限制，就快速的达到了。是的。而不是瓜分数据库了。是的。如何瓜分数据库的数据？这个不需要考虑了。是的。就是直接的快速瓜分了。是的。
+
+为何没有精确的限制呢？why？
 
