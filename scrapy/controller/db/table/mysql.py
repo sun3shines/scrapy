@@ -2,7 +2,7 @@
 
 import MySQLdb
 
-class dbConn:
+class dbConn(object):
 
     def __init__(self,host,user,passwd,port,db):
         self.host = host

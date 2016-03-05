@@ -28,7 +28,7 @@ from cloudcommon.common.utils import get_logger,  public
 from cloudcommon.common.constraints import check_utf8
 from cloudcommon.common.bufferedhttp import jresponse
 
-from ufs.route.urls import handlerequest
+from scrapy.controller.route.urls import handlerequest
 
 class ServerController(object):
     """WSGI controller for the account server."""

@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
 
+import datetime
+import time
+
+from scrapy.globalx.static import URL_RESET_PERIOD
 class Link:
     def __init__(self):
         self.table = 'link'
@@ -10,7 +14,7 @@ class Link:
         
         # type 0: in ,1:out 2:finished
         
-def insert_linkobj(conn,url,time,state=0):
+def insertl(conn,url,time,state=0):
     l = Link()
     keys = [l.url,l.time,l.state]
     vals = [url,time,state]
@@ -18,25 +22,32 @@ def insert_linkobj(conn,url,time,state=0):
     return conn.insert(keys,vals,l.table)
 
 
-def udpate_linkobj(conn,id,state):
+def updatel(conn,id,state,time=''):
     
     l = Link()
     d = {l.state:state}
+    if time:
+        d.update({l.time:time})
     return conn.update(d,l.table,{l.id:id})
 
-def reset_linkobj(conn):
+def resetl(conn):
 
     # 解决好时间问题。    
     l = Link()
     d = {l.state:0}
-    return conn.update(d,l.table,{},'where state = 1 and UNIX_TIMESTAMP(NOW())-UNIX_TIMESTAMP(time) > 60')
+    t = str(datetime.datetime.now())
+    d.update({l.time:t})
+    now = time.time()
+    print now
+    e = 'where state = 1 and %s-UNIX_TIMESTAMP(time) > %s' % (str(now),URL_RESET_PERIOD)
+    return conn.update(d,l.table,{},e)
 
-def s2attrs(conn,state,limit=True):
+def fetchl(conn,state,limit=0):
     
     l = Link()
     attrs = []
     if limit:
-        e = ' limit 1'
+        e = ' limit '+str(limit)
     else:
         e = ''
     datas = conn.select(['*'],l.table,{l.state:state},e)
@@ -45,7 +56,22 @@ def s2attrs(conn,state,limit=True):
             attr = {}
             attr[l.id] = data[0]
             attr[l.url] = data[1]
-            attr[l.time] = data[2]
+#            attr[l.time] = data[2]
             attr[l.state] = data[3]
             attrs.append(attr)
     return attrs
+
+def countl(conn):
+    
+    l = Link()
+    datas = conn.select(['count(%s)' % (l.url)],l.table,{l.state:0})
+    return datas[0][0]
+
+def url2id(conn,url):
+    
+    l = Link()
+    datas = conn.select(['*'],l.table,{l.url:url})
+    if datas:
+        return datas[0][0]
+    return -1
+
