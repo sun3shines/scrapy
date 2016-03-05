@@ -117,3 +117,6 @@ create table link( id bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,url text NOT NU
 
 增加python文件锁 ？ 防止克隆拷贝的时候，被滥用了？
 
+进程推出后，会进一步修改文件锁了。
+
+读文件不靠谱，写数字的时候。打开读。最好写的时候，可以关闭。或者重新写。即使feek依然不可已了。

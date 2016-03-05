@@ -29,13 +29,11 @@ def dispatch(req):
        
     logurls(pid,ids) 
 
-    sets(conn,ids,r=True)
+    sets(conn,ids,r=False)
     puts(conn,newURLs)
     
     attrs = gets(conn,1)
-    attrs = json.dumps(attrs)
  
-    # incr(conn)
     headers = {}
     if not attrs:
         headers = {'url':'wait'}
@@ -44,7 +42,8 @@ def dispatch(req):
             headers = {'url':'speed'}
         else:
             headers = {'url':'stable'}
-        
+
+    attrs = json.dumps(attrs)
     return Response(body=attrs,status=200,headers=headers)
 
 def remove(req):

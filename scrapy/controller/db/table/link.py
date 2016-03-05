@@ -38,7 +38,6 @@ def resetl(conn):
     t = str(datetime.datetime.now())
     d.update({l.time:t})
     now = time.time()
-    print now
     e = 'where state = 1 and %s-UNIX_TIMESTAMP(time) > %s' % (str(now),URL_RESET_PERIOD)
     return conn.update(d,l.table,{},e)
 

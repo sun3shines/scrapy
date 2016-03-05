@@ -12,7 +12,7 @@ from scrapy.node.http import sendurls,sendhrmv,recvconf
 from scrapy.node.log import logfork,logexit,logerror
 from scrapy.node.page import getpage
 from scrapy.node.process import Proc
-from scrapy.node.fs import listattrs,initlock,getlock
+from scrapy.node.fs import listattrs,initlock,incrlock,decrlock
 
 def loop(host,ppath='',ppid=''):
 
@@ -25,7 +25,7 @@ def loop(host,ppath='',ppid=''):
         sys.exit(0)
         
     
-    logfork(current_pid+' by '+ppid)
+    # logfork(current_pid+' by '+ppid)
     p = Proc(ppath,current_pid)
     p.put('dir')
     p.total = int(t.headers.get('total_limit',0))
@@ -58,9 +58,10 @@ def loop(host,ppath='',ppid=''):
                         surls = {}
                         continue
                     else:
-                        logexit(current_pid)
+                        # logexit(current_pid)
                         sendhrmv(host, current_pid)
                         p.delele('dir')
+                        decrlock(p.lockpath,p.total)
                         sys.exit(0)
             else:
                 surls = {}
@@ -76,13 +77,12 @@ def loop(host,ppath='',ppid=''):
         elif 'speed' == cmd:
             
             available =  True
-            if p.count <int(p.bfs) and getlock(p.lockpath, p.total):
+            if p.count <int(p.bfs) and incrlock(p.lockpath, p.total):
                 newpid = os.fork()
                 if 0 == newpid:
                     loop(host,'/'.join([ppath,current_pid]),current_pid)
-                else:
-                    pass
- 
+                    sys.exit(0) 
+
             attrs = json.loads(t.data)
             surls = getpage(attrs)
             continue

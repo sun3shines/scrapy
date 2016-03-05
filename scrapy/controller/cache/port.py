@@ -14,11 +14,8 @@ class ports(Base):
         
     def rmv(self,port):
         self.rmvl(port)
-        
+ 
     @property
     def inc(self):
         count = self.countl
-        syslog.syslog(syslog.LOG_ERR,'host pid count '+str(count))
-#        print int(count), int(PROC_TOTAL_LIMIT)
         return int(count) < int(PROC_TOTAL_LIMIT)
-#        return 18 < 10
