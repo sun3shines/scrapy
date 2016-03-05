@@ -109,3 +109,11 @@ create table link( id bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,url text NOT NU
 
 为何没有精确的限制呢？why？
 
+# 当等于2的数量超过100时，数据库，不再添加ids，则发送wait了。是的。发送命令，让其崩溃，如何？
+
+现在客户端进行限制，后期进行通信，获取从服务端来的各种配置了。是的。增加url配置了。即，controller负责保存配置。并把配置发送给客户端。然后客户端自己进行判断，进行限制了
+
+每个微小的功能，都有可能掀起一场革命了。
+
+增加python文件锁 ？ 防止克隆拷贝的时候，被滥用了？
+

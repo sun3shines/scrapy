@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from scrapy.controller.cache.base import Base
-from scrapy.globalx.static import NODE_NUM_LIMIT
+from scrapy.globalx.static import PROC_TOTAL_LIMIT
 import syslog
 
 class ports(Base):
@@ -19,6 +19,6 @@ class ports(Base):
     def inc(self):
         count = self.countl
         syslog.syslog(syslog.LOG_ERR,'host pid count '+str(count))
-        print int(count), int(NODE_NUM_LIMIT)
-        return int(count) < int(NODE_NUM_LIMIT)
+#        print int(count), int(PROC_TOTAL_LIMIT)
+        return int(count) < int(PROC_TOTAL_LIMIT)
 #        return 18 < 10

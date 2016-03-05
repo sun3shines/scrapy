@@ -9,6 +9,9 @@ class Proc:
         self.pid = pid 
         self.file = '/'.join([self.ppath,pid,'pid'])
         self.dir = '/'.join([self.ppath,pid])
+        self.root = '/'.join(self.dir.split('/')[:2])
+        self.total = self.bfs = self.dfs = 0
+        self.lockpath = '/'.join([self.root,'lock'])
         
     def put(self,t):
         # type 取 dir 或 file        
