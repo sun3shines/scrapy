@@ -132,3 +132,114 @@ create table link( id bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,url text NOT NU
 以及很多的if和else，continue等。
 
 限制bfs和dfs，也就限制了total了。
+
+可以在达到进程的限制后，继续创建线程了。可以这样搞。对于已达到限制的进程，比如说根进程，开始产生线程了。是的。
+
+去掉available ，增加trytimes 是的。作用和avaliable类似了。
+
+关于。position解析的设置。
+获取到url。获取到页面。开线程解析position。在线程关闭的时候解析是合适的。是的。
+或者是对于url进行开线程解析了。是的。获取到不同的页面了。把获取到的页面和url以键值的方式放入到队列中么？
+解析页面，没有IO，所以不需要进行线程了。是的。然后获取到已获取到的page了。此时的url，用于设置state2了。
+对于linkposition，则url2对应于结果url0了。对于非linkposition，则url2对应与[]
+了。而一个页面中，即有linkposition，也有非linkposition了。而非linkposition，则用来存储了。比如说poxyip了。
+
+对于页面，依次使用position，进行解析了。linkposition怎么办？那就返回
+
+因此，那么我们现在就是开始对于页面，进行编了。进行规划了。是的。
+
+好好设计，把层次搞清楚，后面的就可以随便的浪了。是的。
+
+关于自由的写，和利用别人的写。有什么区别么？
+
+那么对于proxyposition，该如何处理呢？解析后，如何可用，则直接使用了。是的。并且，会自动使用position代理了。是的。
+
+所以那么现在的思路，就是一旦启动后，代理就会启动了。同时启动代理的解析了。是的。即任何的一个
+
+一个网站，或者url，对于其的position的set了。是的。
+
+而且解析出来的代理，url会被同时的发送使用了。
+
+那么我们平时只要搜集代理的ip，就可以了。是的。
+
+同时解析一遍，因为不清楚，那些的ip是否可用了。而且网站上应该会有更新了。是的。所以，会找速度快，的代理ip了。是的。会先启动代理吧。等可活跃的代理数量足够多的时候，再开启我们的主任务预热了。是的。到后期，两个任务会进行融合了。是的。
+
+一在这个上面，那么我的思路是很牛逼的。但是为什么在现实中，和人相处时，思路就傻逼了。就停滞了？擦。
+
+每个网站，会有自己的一套规则了。是的。
+
+而对于代理ip，则其的用法也是不同的了。是的。代理ip还是存到数据库较为合适了。是的。读或者写了，因为所有的进程都要可以进行访问了。所以，是的。
+
+所以特定position.特定存储了。比如说对于代理IP，那就和url一样，也是存储在表中了。如果没有，那就只能用自己的了。是的。
+
+以及开其他的线程，验证代理ip的有效性了。是的。
+
+慢慢布局，做好代理ip这块。和url一样了。是的。
+
+代理ip这块的功能，需要好好的合计下。判断下其的基本流程了。是的。
+
+代理ip的基本流程了。
+实时的使用了，每个十分钟，会清除本进程的所有的代理了。是的。
+
+不浮躁，慢慢布局了。慢慢研究了。
+
+关于那个什么。关于代理ip的使用方式。住去url时，采用代理ip了。会随机配置相应的代理ip了？是的。那么。url，附加相应的代理ip了。是的。减少node节点的复杂度。从controller中获取等等。是的。
+
+一开始，会默认产生几个了。是的。访问不同的代理ip。存储到数据库中了。并且在controller中，开启新的线程，进行验证了。
+
+然后proxypositioin和linkposition就完成了统一处理了。是的。
+
+此时就是无差别的处理了。牛逼啊。是的。判断代理ip，是否为本机ip了。如果为本机ip，则不开线程。主线程执行了。是的。如果是代理ip，则允许执行了。是的。
+
+做一个完成的代理管理了。现在多干点，作为我们的积累了。是的。
+
+先存一些ip吧，还是。
+
+搜集ip的总量。对于每个端口进行常识了。如果代理ip端口，可用，则可用。不可用，则扯淡了。是的。
+
+这个就是代理ip的管理了。是的。
+
+创建IP 表。表明属性。和主机 ？or代理？。是的。 活动？or不活动。
+
+每个IP或者主机，对应着一套的解析规则了。是的。
+
+即，此处，应该是代理IP管理了。增加代理website ，代理的集合了。是的。
+
+id,proxyhost
+
+id,ip,port,type,active 0，为检测，1，不可用，2，可用。一上来，会默认设置了。并使用线程，进行连接了。是的。
+
+不包括本机ip，如果查不到适合的ip，则使用本机ip了。 是的。
+
+代理ip的流程先跑通。
+
+爬代理ip的网站，和爬其他网站的方式其实是一样的。 是的。
+
+先写一个积累的方式了。
+
+node对于解析出来的ip不验证，直接，入库。因为不符合设计理念了符合解析要求的数据。至于可用要求，这个是针对于存储后的专门处理了。是的。
+
+create table proxyip( id bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,ip varchar(32) NOT NULL,port int NOT NULL,active int NOT NULL);
+
+create table proxysite( id bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,host varchar(255) NOT NULL,active int NOT NULL);
+
+编写数据库接口，插入原始数据。编写后台线程了。 在插入的时候，会进行验证端口的可用了。是的。 要求速度快的。
+
+后台验证线程了。
+
+对于website的操作。只有插入了。是的。选择好host，然后插入了。是的。
+
+proxyip，insert（批量），update（批量），select（批量limit）
+
+proxysite，insert 
+
+关于数据库的随机处理？如何？搞之？
+
+SELECT * FROM link WHERE id >= ((SELECT MAX(id) FROM link)-(SELECT MIN(id) FROM link)) * RAND() + (SELECT MIN(id) FROM link)  LIMIT 100
+
+SELECT * FROM link WHERE id >= ((SELECT MAX(id) FROM link)-(SELECT MIN(id) FROM link)) * RAND() + (SELECT MIN(id) FROM link)  AND state=1 LIMIT 1000;
+
+研究下后台进程的proxy的业务了。 以及作为批量初始化的情况了。
+
+需要有去重操作了。是的。
+
