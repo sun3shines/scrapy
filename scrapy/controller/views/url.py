@@ -30,7 +30,7 @@ def dispatch(req):
     logurls(pid,ids) 
 
     sets(conn,ids,r=False)
-    puts(conn,newURLs)
+    # puts(conn,newURLs)
     
     attrs = gets(conn,1)
  
@@ -42,6 +42,8 @@ def dispatch(req):
             headers = {'url':'speed'}
         else:
             headers = {'url':'stable'}
+
+    print headers
 
     attrs = json.dumps(attrs)
     return Response(body=attrs,status=200,headers=headers)

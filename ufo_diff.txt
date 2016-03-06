@@ -120,3 +120,15 @@ create table link( id bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,url text NOT NU
 进程推出后，会进一步修改文件锁了。
 
 读文件不靠谱，写数字的时候。打开读。最好写的时候，可以关闭。或者重新写。即使feek依然不可已了。
+
+在controller中发送相关的信息给node，然后node自己来执行了。发送任务的解析片段。和所解析的内容，或者信息了。是的。
+
+然后此处的内容最好还是可以去重构一下了。 这个礼拜，最好是能够把分布式爬虫给写完了。进程控制已经搞定了。是的。
+
+代码，能否按照层次进行优化？
+
+如何把continue去掉？采用yield 方式？
+
+以及很多的if和else，continue等。
+
+限制bfs和dfs，也就限制了total了。

@@ -11,90 +11,55 @@ import shutil
 from scrapy.node.http import sendurls,sendhrmv,recvconf
 from scrapy.node.log import logfork,logexit,logerror
 from scrapy.node.page import getpage
-from scrapy.node.process import Proc
+from scrapy.node.proc import Proc
 from scrapy.node.fs import listattrs,initlock,incrlock,decrlock
 
-def loop(host,ppath='',ppid=''):
-
-    time.sleep(1)
+def get_response(host,parent,p=None):
     
-    current_pid = str(os.getpid())
-    t = recvconf()
-    if 2 != t.status/100:
-        logerror(current_pid, 'recv controller config failed .exit.')
-        sys.exit(0)
-        
-    
-    # logfork(current_pid+' by '+ppid)
-    p = Proc(ppath,current_pid)
-    p.put('dir')
-    p.total = int(t.headers.get('total_limit',0))
-    p.dfs = int(t.headers.get('dfs_limit',0))
-    p.bfs = int(t.headers.get('bfs_limit',0))
- 
-    surls = {}
-    available = True
+    if not p:
+        p = Proc(host,parent)
+        p.create()
     
     while True:
-        t = sendurls(host, current_pid, surls)
-        if 2 != t.status/100:
-            surls = {}
+        if not p.send():
             continue
-        
-        param = t.headers
-        cmd = param.get('url')
-        print cmd        
-        if 'wait' == cmd:
-            time.sleep(5)
-            
-            if '/scrapy' !=ppath:
+        yield p
+    
+def main(host,parent):
+   
+    time.sleep(1)
+    # 关键是在这里，从子进程，切换会父进程了 
+    available = True
+    p = None
+    for p in get_response(host, parent,p):
+        if p.wait:
+            p.sleep()
+            if p.root !=p.parent:
                 if available:
                     available = False
-                    surls = {}
-                    continue
-                
+                    p.reset()
                 else:
                     if not p.empty:
-                        surls = {}
-                        continue
+                        p.reset()
                     else:
-                        # logexit(current_pid)
-                        sendhrmv(host, current_pid)
-                        p.delele('dir')
-                        decrlock(p.lockpath,p.total)
-                        sys.exit(0)
+                        p.destroy()
             else:
-                surls = {}
-                continue
-            
-        elif 'stable' == cmd:
-            
+                p.reset()
+        elif p.stable:
             available =  True
-            attrs = json.loads(t.data) 
-            surls = getpage(attrs)
-            continue
-        
-        elif 'speed' == cmd:
-            
+            p.run()
+        elif p.speed:
             available =  True
-            if p.count <int(p.bfs) and incrlock(p.lockpath, p.total):
-                newpid = os.fork()
-                if 0 == newpid:
-                    loop(host,'/'.join([ppath,current_pid]),current_pid)
-                    sys.exit(0) 
-
-            attrs = json.loads(t.data)
-            surls = getpage(attrs)
-            continue
-
-        else:
-            surls = {}
-            continue
+            if p.allow:
+                if 0 == p.fork():
+                    main(p.host,p.path)
+                    sys.exit(0)
+            p.run()
 
 if __name__ == '__main__':
    
     shutil.rmtree('/scrapy')
     os.mkdir('/scrapy') 
     initlock('/scrapy/lock')
-    loop('192.168.36.201','/scrapy','')
+    main('192.168.36.201','/scrapy')
     
