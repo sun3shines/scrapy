@@ -9,7 +9,7 @@ from scrapy.globalx.static import PROC_TOTAL_LIMIT,PROC_BFS_LIMIT,PROC_DFS_LIMIT
     ROOT_DIR
 
 def get(req):
-    
+
     headers = {}
     headers.update({'total_limit':PROC_TOTAL_LIMIT})
     headers.update({'bfs_limit':PROC_BFS_LIMIT})

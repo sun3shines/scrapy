@@ -16,7 +16,7 @@ def puti(conn,proxys,active=0):
                 inserti(conn, host, port, active=0)
             except:
                 pass
-                
+
 def geti(conn,active,limit=200,rand=True):
     # active 为0 为后台线程使用
     # active 为1 为scrapy线程使用
@@ -45,7 +45,8 @@ def seti(conn,ids,active):
                 pass
     
 def rset(conn):
-    updatei(conn, 0, id=0)
+    with getlock(conn) as mylock:
+        updatei(conn, 0, id=0)
     
 # 关于proxyip的种种操作。
 
@@ -60,3 +61,17 @@ def rset(conn):
 # 后台线程，会判断数量了。如果抓取的数量为0，则后台线程停止20分钟了。是的。
 
 # 如果没有代理IP，则强制wait了，不执行任务。是的。必须要有代理ip了。
+
+def getproxyip(conn,limit):
+
+    ips = []
+    i = Proxyip()
+    while len(ips) < limit:
+        print 'again'
+        attrs = fetchi(conn, 1, limit)
+        ips.extend(attrs)
+    return ips
+
+if __name__ == '__main__':
+    conn = getdb()
+    print len(getproxyip(conn,200))

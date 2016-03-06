@@ -21,7 +21,5 @@ class ProxyWorker(threading.Thread):
             active = 1
         seti(self.conn, [self.id], active)
          
-        
-    
-    
+
     

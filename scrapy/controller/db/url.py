@@ -33,18 +33,17 @@ def gets(conn,limit=0):
                 pass
     return attrs
 
-def sets(conn,ids=[],r=False):
+def sets(conn,ids=[],reset=False):
     # merge时会检查，此时重置有意义。
     with getlock(conn) as mylock:
-        if r:
-            resetl(conn)
         if ids:
             for id in ids:
                 try:
                     updatel(conn, id, 2)
                 except:
                     pass
-
+        if reset:
+            resetl(conn)
     
 def incr(conn):
     if  countl(conn) > 50:

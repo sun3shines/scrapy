@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from cloudcommon.common.bufferedhttp import jresponse
-from scrapy.controller.views.url import dispatch,remove
+from scrapy.controller.views.url import dispatch
+from scrapy.controller.views.host import remove
 import scrapy.controller.views.config
 
 url2view = {}
