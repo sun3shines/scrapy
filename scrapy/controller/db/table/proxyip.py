@@ -21,7 +21,7 @@ def fetchi(conn,active,limit = 0,rand=True):
     
     e = ''
     if rand:
-        e = 'WHERE (id >= ((SELECT MAX(id) FROM %s)-(SELECT MIN(id) FROM %s)) * RAND() + (SELECT MIN(id) FROM %s)) AND %s=%s' \
+        e = ' WHERE (id >= ((SELECT MAX(id) FROM %s)-(SELECT MIN(id) FROM %s)) * RAND() + (SELECT MIN(id) FROM %s)) AND %s=%s' \
 % (i.table,i.table,i.table,i.active,active)
         
     if limit:
@@ -50,7 +50,7 @@ def updatei(conn,active,id=0):
 
 def proxy2id(conn,host,port):
     i = Proxyip()
-    datas = conn.select(['*'],i.table,{i.host:host,i.port:port})
+    datas = conn.select(['*'],i.table,{i.ip:host,i.port:port})
     if datas:
         return datas[0][0]
     return -1

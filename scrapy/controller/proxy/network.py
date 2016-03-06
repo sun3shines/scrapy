@@ -8,6 +8,7 @@ def isActive(host,port):
     try:
         sock.connect((host,int(port)))
         sock.shutdown(2) 
+        sock.close() 
         return True
     except:
         sock.close()

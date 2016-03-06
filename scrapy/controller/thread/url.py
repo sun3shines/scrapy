@@ -24,6 +24,7 @@ class Worker(threading.Thread):
 if __name__ == '__main__':
 
     db = getdb()
-    Worker(db).run()
-
+    Worker(db).start()
+    while True:
+        time.sleep(5)
     
