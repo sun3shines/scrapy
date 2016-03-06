@@ -8,8 +8,7 @@ from scrapy.controller.db.table.lock.mysql import getdb
 from scrapy.controller.proxy.thread import ProxyWorker
 
 def app_iter(conn):
-
-    attrs = geti(conn, 0,)
+    attrs = geti(conn, 0)
     for attr in attrs:
         yield (attr['id'],attr['ip'],attr['port'])  
         

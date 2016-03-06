@@ -16,13 +16,25 @@ def puti(conn,proxys,active=0):
                 inserti(conn, host, port, active=0)
             except:
                 pass
-        
+                
 def geti(conn,active,limit=200,rand=True):
     # active 为0 为后台线程使用
     # active 为1 为scrapy线程使用
+    i = Proxyip()
+    
     with getlock(conn) as mylock:
-        return fetchi(conn, active, limit, rand)
-     
+        attrs = fetchi(conn, active, limit, rand)
+        if 0 != active:
+            return attrs
+        # 防止被重复抓取，too many sockets 
+        for attr in attrs:
+            try:
+                id = attr.get(i.id)
+                updatei(conn, 3, id)
+            except:
+                pass
+        return attrs
+
 def seti(conn,ids,active):
     # active 为1，2 为后台线程使用， updatei只有后台进程来使用了。
     with getlock(conn) as mylock:

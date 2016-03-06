@@ -243,3 +243,4 @@ SELECT * FROM link WHERE id >= ((SELECT MAX(id) FROM link)-(SELECT MIN(id) FROM 
 
 需要有去重操作了。是的。
 
+对于scoket资源采用锁的方式访问了。那为什么之前的线程没事呢？统计下开了多少的锁了。是的。
