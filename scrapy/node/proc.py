@@ -18,12 +18,13 @@ class Proc:
         self.pid = str(os.getpid())
         self.dir = '/'.join([self.parent,self.pid])
         self.root = '/'.join(self.dir.split('/')[:2])
-        self.total = self.bfs = self.dfs = 0
         self.lockpath = '/'.join([self.root,'lock'])
         self.path = self.dir
         
         self.surls = []
         self.attrs = None
+        self.total = self.bfs = self.dfs = 0
+        
         
     def put(self):
         os.mkdir(self.dir)
@@ -49,7 +50,10 @@ class Proc:
         self.total = int(t.headers.get('total_limit',0))
         self.dfs = int(t.headers.get('dfs_limit',0))
         self.bfs = int(t.headers.get('bfs_limit',0))
- 
+        self.inittimes = int(t.headers.get('try_times','3'))
+        self.sleep_interval = int(t.headers.get('proc_sleep_interval','5'))
+        self.trytimes = self.inittimes
+        
     def destroy(self):
         
         sendhrmv(self.host, self.pid)
@@ -76,8 +80,6 @@ class Proc:
         else:
             param = t.headers
             self.cmd = param.get('url')
-            if self.parent == self.root:
-                print 'get headers',self.cmd        
             if self.cmd not in ['wait','stable','speed']:
                 self.reset()
                 return False
@@ -86,10 +88,11 @@ class Proc:
             return True
     
     def run(self):
+        self.trytimes = self.inittimes
         self.surls = getpage(self.attrs)
     
     def sleep(self):
-        time.sleep(5)
+        time.sleep(self.sleep_interval)
         
     def reset(self):
         self.surls = {}
@@ -106,4 +109,8 @@ class Proc:
     def speed(self):
         return 'speed' == self.cmd
     
-    
+    @property
+    def atry(self):
+        times = self.trytimes
+        self.trytimes = self.trytimes - 1
+        return times > 0

@@ -1,18 +1,13 @@
 # -*- coding: utf-8 -*-
 
-
-import json
 import os
 import sys
 import time
-import syslog
 import shutil
 
-from scrapy.node.http import sendurls,sendhrmv,recvconf
-from scrapy.node.log import logfork,logexit,logerror
-from scrapy.node.page import getpage
 from scrapy.node.proc import Proc
-from scrapy.node.fs import listattrs,initlock,incrlock,decrlock
+from scrapy.node.fs import initlock
+from scrapy.globalx.static import ROOT_DIR
 
 def get_response(host,parent,p=None):
     
@@ -29,14 +24,12 @@ def main(host,parent):
    
     time.sleep(1)
     # 关键是在这里，从子进程，切换会父进程了 
-    available = True
     p = None
     for p in get_response(host, parent,p):
         if p.wait:
             p.sleep()
             if p.root !=p.parent:
-                if available:
-                    available = False
+                if p.atry:
                     p.reset()
                 else:
                     if not p.empty:
@@ -46,10 +39,8 @@ def main(host,parent):
             else:
                 p.reset()
         elif p.stable:
-            available =  True
             p.run()
         elif p.speed:
-            available =  True
             if p.allow:
                 if 0 == p.fork():
                     main(p.host,p.path)
@@ -58,8 +49,8 @@ def main(host,parent):
 
 if __name__ == '__main__':
    
-    shutil.rmtree('/scrapy')
-    os.mkdir('/scrapy') 
-    initlock('/scrapy/lock')
-    main('192.168.36.201','/scrapy')
+    shutil.rmtree(ROOT_DIR)
+    os.mkdir(ROOT_DIR) 
+    initlock('/'.join([ROOT_DIR,'lock']))
+    main('192.168.36.201',ROOT_DIR)
     
