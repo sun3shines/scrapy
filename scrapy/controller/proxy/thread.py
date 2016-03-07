@@ -2,7 +2,7 @@
 
 import threading
 import time
-from scrapy.controller.proxy.network import isActive
+from scrapy.controller.proxy.network import isActive,htmlActive
 from scrapy.controller.db.proxyip import seti
 
 class ProxyWorker(threading.Thread):
@@ -18,7 +18,8 @@ class ProxyWorker(threading.Thread):
         time.sleep(0.1)
         active = 2
         if isActive(self.host, self.port):
-            active = 1
+            if htmlActive(self.host,self.port):
+                active = 1
         seti(self.conn, [self.id], active)
          
 

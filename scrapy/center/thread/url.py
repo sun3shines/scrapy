@@ -9,16 +9,17 @@ import time
 class Worker(threading.Thread):
 
     def __init__(self,conn):
+        threading.Thread.__init__(self)
         self.conn = conn
 
     def run(self):
         while True:
-            url = str(time.time())
-            
+            url = 'www.haodailiip.com/guoji/1' 
             url = urlpath(url)
             
             puts(self.conn,[url])            
             time.sleep(1)
+            break
 
 
 if __name__ == '__main__':

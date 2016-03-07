@@ -8,7 +8,7 @@ import json
 from scrapy.node.core.http import sendurls,sendhrmv,recvconf
 from scrapy.node.core.log import logfork,logexit,logerror
 from scrapy.node.core.fs import listattrs,initlock,incrlock,decrlock
-from scrapy.node.page import getpage
+from scrapy.node.thread import call
 
 class Proc:
     
@@ -90,7 +90,7 @@ class Proc:
     
     def run(self):
         self.trytimes = self.inittimes
-        self.finishurls = getpage(self.attrs)
+        self.finishurls = call(self.attrs)
     
     def sleep(self):
         time.sleep(self.sleep_interval)
