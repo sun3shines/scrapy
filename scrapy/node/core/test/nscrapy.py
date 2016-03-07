@@ -13,6 +13,7 @@ from scrapy.node.log import logfork,logexit,logerror
 from scrapy.node.page import getpage
 from scrapy.node.process import Proc
 from scrapy.node.fs import listattrs,initlock,incrlock,decrlock
+from scrapy.globalx.static import CONTROLLER_HOST
 
 def loop(host,ppath='',ppid=''):
 
@@ -96,5 +97,5 @@ if __name__ == '__main__':
     shutil.rmtree('/scrapy')
     os.mkdir('/scrapy') 
     initlock('/scrapy/lock')
-    loop('192.168.36.201','/scrapy','')
+    loop(CONTROLLER_HOST,'/scrapy','')
     

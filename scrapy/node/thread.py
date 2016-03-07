@@ -15,7 +15,7 @@ class ParseWorker(threading.Thread):
     def run(self):
         print self.host,self.port,self.url
         u = Url(self.host,self.port,self.url)
-        Page(u.html).parse()
+        Page(u.html,u.url).parse()
         
 
 def call(tasks):

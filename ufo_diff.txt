@@ -334,3 +334,30 @@ alter table proxyip add column anonymous varchar(8);
 alter table proxyip add column abroad varchar(8);
 
 目前先过滤掉https吧。以及，先如何搞之？
+
+国外的不好使，还是国内的好。
+
+制作成为rpm包，以及mysql数据库搭建 了。
+
+mysqldump -u root -p111111 scrapy > dbscrapy.bak
+
+如mysql -u root -p
+
+mysql>use 数据库名
+
+然后使用source命令，后面参数为脚本文件(如这里用到的.sql)
+
+mysql>source /home/bak.sql
+
+tar -jcvf scrapy-1.1.tar.gz scrapy --exclude=.svn
+
+制作common，server，scrapy等的rpm包。要求标准化。是的。
+
+关于爬虫的进一步改进。即，一个客户端，myscrapy.py
+处理一个site了。而所有需要的postion，都在此myscrapy中处理了。以及该myscrapy进程，只处理和该site相关的url了。即，发送的url了？是的。因此，客户端，发送请求时，有自己的标志符了。而插入到数据库，url带有此标志符。且返回该标志的url了。是的。
+
+然后proxydaemon，就可以剥离了。每个网站，都有自己的scrapy客户端。等于是注册了。以及，写任务了。写position了。是的。写出来链接，即可了。是的。可以进行配置了。且全局配置，是在此客户端中进行写配置了。而不是本地配置了。是的。
+
+由主机，和客户端，来设定本机的值了。或者说是全局配置了。是的。
+
+

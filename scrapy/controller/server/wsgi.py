@@ -34,10 +34,8 @@ from eventlet.green import socket, ssl
 from webob import Request
 from urllib import unquote
 
-from swift.common.utils import capture_stdio, disable_fallocate, \
-    drop_privileges, get_logger, NullLogger, TRUE_VALUES, \
-    validate_configuration
-
+from cloudcommon.common.utils import capture_stdio, disable_fallocate, \
+    drop_privileges, get_logger, NullLogger, TRUE_VALUES
 
 def monkey_patch_mimetools():
     """
@@ -117,8 +115,7 @@ def run_wsgi(conf_file, app_section, *args, **kwargs):
     except Exception, e:
         print "Error trying to load config %s: %s" % (conf_file, e)
         return
-    validate_configuration()
-
+    
     # pre-configure logger
     log_name = conf.get('log_name', app_section)
     if 'logger' in kwargs:

@@ -17,7 +17,7 @@ def loop():
     conn = getdb()
     while True:
         
-        rset(conn)
+#        rset(conn)
         time.sleep(1)
         while True:
             print 'again'
@@ -30,7 +30,7 @@ def loop():
                 break
 
         print 'finished'
-        time.sleep(60*60)
+        time.sleep(60)
 
 if __name__ == '__main__':
     socket.setdefaulttimeout(5)

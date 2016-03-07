@@ -8,6 +8,7 @@ import shutil
 from scrapy.node.core.proc import Proc
 from scrapy.node.core.fs import initlock
 from scrapy.globalx.static import ROOT_DIR
+from scrapy.globalx.static import CONTROLLER_HOST
 
 def get_response(host,parent,p=None):
     
@@ -52,6 +53,6 @@ def start():
     shutil.rmtree(ROOT_DIR)
     os.mkdir(ROOT_DIR) 
     initlock('/'.join([ROOT_DIR,'lock']))
-    main('192.168.36.201',ROOT_DIR)
+    main(CONTROLLER_HOST,ROOT_DIR)
    
  

@@ -15,8 +15,8 @@
 # limitations under the License.
 
 from cloudcommon.common.utils import parse_options
-from ufs.server.wsgi import run_wsgi
+from scrapy.controller.server.wsgi import run_wsgi
 
 if __name__ == '__main__':
     conf_file, options = parse_options()
-    run_wsgi(conf_file, 'cloud-server', default_port=7020, **options)
+    run_wsgi(conf_file, 'scrapy-server', default_port=7020, **options)
