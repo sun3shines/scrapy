@@ -323,3 +323,14 @@ get是一致性的。所以要求，线程结束后。其的结果，需要进�
 
 proxyip表增加type http？orhttps varchar（8）
 
+为什么大公司不封匿名端口？
+
+增加 scheme anonymous
+
+alter table proxyip add column scheme varchar(8);
+
+alter table proxyip add column anonymous varchar(8); 
+
+alter table proxyip add column abroad varchar(8);
+
+目前先过滤掉https吧。以及，先如何搞之？

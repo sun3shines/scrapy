@@ -10,7 +10,8 @@ class Page(object):
     def __init__(self,html):
         self.f = BeautifulSoup(html)
         try:
-            file('html.txt','w').write(html)
+#            file('html.txt','w').write(html)
+             pass
         except:
             pass
 
@@ -23,7 +24,6 @@ class Page(object):
    
 if __name__ == '__main__':
 
-    import pdb;pdb.set_trace()
     page = Page(file('html.txt').read()) 
     page.parse()
 

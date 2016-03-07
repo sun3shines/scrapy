@@ -10,7 +10,10 @@ from scrapy.controller.db.proxyip import puti
 
 def proxymerge(req):
     
-    proxys = json.loads(req.body)
+    attrs = json.loads(req.body)
+    proxys = []
+    for attr in attrs:
+        proxys.append((attr.get('ip'),attr.get('port')))
     puti(conn,proxys,active=0)           
     # 对于url路径的标准 应在客户端进行，较少服务器的压力
     return Response(status=200)
