@@ -21,16 +21,15 @@ class Worker(threading.Thread):
             time.sleep(1)
             break
 
-
 if __name__ == '__main__':
 
-    db = getdb()
 #    Worker(db).start()
 #    while True:
 #        time.sleep(5)
 #    site = 'www.xicidaili.com/nn/1'
     site = 'www.haodailiip.com/guonei/1'
     url = urlpath(site)
+    db = getdb()
     puts(db,[url])
     db.close()
     

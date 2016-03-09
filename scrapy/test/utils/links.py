@@ -72,7 +72,6 @@ class MyHost(Host):
 
         return ''
 
-
 if __name__ == '__main__':
 
     h = MyHost()

@@ -8,36 +8,37 @@ import time
 import syslog
 import shutil
 
-from scrapy.node.http import sendurls,sendhrmv,recvconf
-from scrapy.node.log import logfork,logexit,logerror
-from scrapy.node.page import getpage
-from scrapy.node.process import Proc
-from scrapy.node.fs import listattrs,initlock,incrlock,decrlock
+from scrapy.worker.http import sendurls,sendhrmv,recvconf
+from scrapy.worker.log import logfork,logexit,logerror
+from scrapy.worker.page import getpage
+from scrapy.worker.proc import Proc
+from scrapy.worker.fs import listattrs,initlock,incrlock,decrlock
 from scrapy.globalx.static import CONTROLLER_HOST
 
 def loop(host,ppath='',ppid=''):
 
-    time.sleep(1)
-    
-    current_pid = str(os.getpid())
-    t = recvconf()
-    if 2 != t.status/100:
-        logerror(current_pid, 'recv controller config failed .exit.')
-        sys.exit(0)
+    time.sleep(1) # 关键是在这里，从子进程，切换会父进程了
+#    current_pid = str(os.getpid())
+#    t = recvconf()
+#    if 2 != t.status/100:
+#        logerror(current_pid, 'recv controller config failed .exit.')
+#        sys.exit(0)
         
     
-    # logfork(current_pid+' by '+ppid)
-    p = Proc(ppath,current_pid)
-    p.put('dir')
-    p.total = int(t.headers.get('total_limit',0))
-    p.dfs = int(t.headers.get('dfs_limit',0))
-    p.bfs = int(t.headers.get('bfs_limit',0))
+    
+#    p = Proc(ppath,current_pid)
+    p = Proc(host,ppath)
+    p.create()
+#    p.put('dir')
+#    p.total = int(t.headers.get('total_limit',0))
+#    p.dfs = int(t.headers.get('dfs_limit',0))
+#    p.bfs = int(t.headers.get('bfs_limit',0))
  
     surls = {}
     available = True
     
     while True:
-        t = sendurls(host, current_pid, surls)
+        t = sendurls(host, p.pid, surls)
         if 2 != t.status/100:
             surls = {}
             continue
@@ -60,7 +61,7 @@ def loop(host,ppath='',ppid=''):
                         continue
                     else:
                         # logexit(current_pid)
-                        sendhrmv(host, current_pid)
+                        sendhrmv(host, p.pid)
                         p.delele('dir')
                         decrlock(p.lockpath,p.total)
                         sys.exit(0)
@@ -81,7 +82,7 @@ def loop(host,ppath='',ppid=''):
             if p.count <int(p.bfs) and incrlock(p.lockpath, p.total):
                 newpid = os.fork()
                 if 0 == newpid:
-                    loop(host,'/'.join([ppath,current_pid]),current_pid)
+                    loop(host,'/'.join([ppath,p.pid]),p.pid)
                     sys.exit(0) 
 
             attrs = json.loads(t.data)

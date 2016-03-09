@@ -8,14 +8,18 @@ from scrapy.globalx.static import CONTROLLER_HOST,CONTROLLER_PORT
 
 class LinkMerge(Task):
     
-    def __init__(self,urls):
+    def __init__(self,urls,uuid):
         self.urls = urls
-    
+        self.uuid = uuid
+        
     def getUrl(self):
         return strUrlMerge
     
     def getBody(self):
         return json.dumps(self.urls)
+    
+    def getHeaders(self):
+        return {'uuid':self.uuid}
     
 class ProxyMerge(Task):
     
@@ -28,8 +32,8 @@ class ProxyMerge(Task):
     def getBody(self):
         return json.dumps(self.proxys)
     
-def sendurls(urls):
-    t = LinkMerge(urls)
+def sendurls(urls,uuid):
+    t = LinkMerge(urls,uuid)
     t = mission.execute(CONTROLLER_HOST,CONTROLLER_PORT,t)
     return t 
 

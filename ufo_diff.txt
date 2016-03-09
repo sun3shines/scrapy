@@ -353,6 +353,9 @@ tar -jcvf scrapy-1.1.tar.gz scrapy --exclude=.svn
 
 制作common，server，scrapy等的rpm包。要求标准化。是的。
 
+self.root
+需要变更了。不为其parent，是的。而是后面三个。判断是否为祖先，则是写path == root了。
+
 关于爬虫的进一步改进。即，一个客户端，myscrapy.py
 处理一个site了。而所有需要的postion，都在此myscrapy中处理了。以及该myscrapy进程，只处理和该site相关的url了。即，发送的url了？是的。因此，客户端，发送请求时，有自己的标志符了。而插入到数据库，url带有此标志符。且返回该标志的url了。是的。
 
@@ -360,4 +363,30 @@ tar -jcvf scrapy-1.1.tar.gz scrapy --exclude=.svn
 
 由主机，和客户端，来设定本机的值了。或者说是全局配置了。是的。
 
+现在是进程共享/scrapy 了。所以需要区分出来st_dir 和 root_dir 了。
 
+        # 此时self.http.status 结果可以保存，留在合适的 机会进行判断了
+        # p.run 和 p.new 可以统一执行了，根据self.http.status
+        # 来进行判断了。是的。以及其的状态。
+        # 这个就是面向对象的好处了。是的。为什么呢？因为判断的问题么？
+        # DRY 原则。
+        # 因为之前是因为条件只能判断一次，所以函数就会执行多次，现在为了函数执行一次，那么条件判断
+        # 就执行多次了
+
+面向结构，都是一次判断的。以情况判断的。但是在面向对象中则不是，可以多次判断了。是的。所以，看着好看，但是可读性不好了。
+
+状态会被记忆的问题呢？状态会被保留了？
+
+需要有一个状态clear的过程了。是的。
+
+#  input,output ，此时为controller的大使了。不是钥匙。不是对立的。而是一致的。 顾问大使，钥匙和锁，枪和弹
+
+create table scrapy( id bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,uuid varchar(255) NOT NULL,starturl varchar(255) NOT NULL);
+
+create table link( id bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,url text NOT NULL,time datetime,state int NOT NULL,uid bigint NOT NULL);
+
+alter table link add constraint uuid_check foreign key(uid) references scrapy(id) on delete cascade on update cascade;
+
+把代理，当成普通的处理了。是的
+
+conf中，host和parent不能通过conf获取了。因为进程fork的问题。是的。进程fork的问题，导致了配置不同。但是，在运行中能否修改呢？算了。

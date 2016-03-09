@@ -11,13 +11,13 @@ class Link:
         self.url = 'url'
         self.time = 'time'
         self.state = 'state'
-        
+        self.uid = 'uid'
         # type 0: in ,1:out 2:finished
         
-def insertl(conn,url,time,state=0):
+def insertl(conn,url,time,uid,state=0):
     l = Link()
-    keys = [l.url,l.time,l.state]
-    vals = [url,time,state]
+    keys = [l.url,l.time,l.state,l.uid]
+    vals = [url,time,state,uid]
     
     return conn.insert(keys,vals,l.table)
 
@@ -41,7 +41,7 @@ def resetl(conn):
     e = 'where state = 1 and %s-UNIX_TIMESTAMP(time) > %s' % (str(now),URL_RESET_PERIOD)
     return conn.update(d,l.table,{},e)
 
-def fetchl(conn,state,limit=0):
+def fetchl(conn,state,uid,limit=0):
     
     l = Link()
     attrs = []
@@ -49,13 +49,12 @@ def fetchl(conn,state,limit=0):
         e = ' limit '+str(limit)
     else:
         e = ''
-    datas = conn.select(['*'],l.table,{l.state:state},e)
+    datas = conn.select(['*'],l.table,{l.state:state,l.uid:uid},e)
     if datas:
         for data in datas:
             attr = {}
             attr[l.id] = data[0]
             attr[l.url] = data[1]
-#            attr[l.time] = data[2]
             attr[l.state] = data[3]
             attrs.append(attr)
     return attrs

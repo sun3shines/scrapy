@@ -5,26 +5,27 @@ from scrapy.controller.db.table.link import insertl,fetchl, \
     Link,updatel,resetl,countl,url2id
 
 from scrapy.controller.db.table.lock.mysql import getdb,getlock
-  
-def puts(conn,urls=[]):
+
+def puts(conn,urls,uid):
     # 添加之前，需要进行去重了
     with getlock(conn) as mylock:
+        
         for url in urls:
             try:
                 if -1 != url2id(conn, url):
                     continue
              
                 t = str(datetime.datetime.now())
-                insertl(conn, url, t, state=0)
+                insertl(conn, url, t,uid, state=0)
             except:
                 pass
         
-def gets(conn,limit=0):
+def gets(conn,uid,limit=0):
     
     attrs = []
     with getlock(conn) as mylock:
         l = Link()
-        attrs = fetchl(conn, 0, limit)
+        attrs = fetchl(conn, 0, uid,limit)
         for attr in attrs:
             try:
                 id = attr.get(l.id)
