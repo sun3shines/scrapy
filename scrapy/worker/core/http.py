@@ -11,12 +11,13 @@ from scrapy.globalx.static import CONTROLLER_HOST,CONTROLLER_PORT,PROC_WAIT, \
     
 class Url(Task):
     
-    def __init__(self,host,pid,urls={}):
+    def __init__(self,host,pid,uuid,urls={}):
         
         self.host = host
         self.pid = pid
         self.urls = urls
-    
+        self.uuid = uuid
+        
     def getUrl(self):
         return strUrlPutGet
     
@@ -25,7 +26,8 @@ class Url(Task):
     
     def getHeaders(self):
         return {'host':self.host,
-                'pid':self.pid}
+                'pid':self.pid,
+                'uuid':self.uuid}
         
     
 class HostRmv(Task):
@@ -61,10 +63,11 @@ class Http:
     
     def put(self):
         self.http.eliminate()
-        t = Url(self.http.host,self.http.pid,self.http.input)
+        t = Url(self.http.host,self.http.pid,self.http.uuid,self.http.input)
         t = mission.execute(self.http.controller_host,self.http.controller_port,t)
-        if 2 == t.status/2:
+        if 2 == t.status/100:
             self.http.cmd = int(t.headers.get('url',0))
+            print 'controller cmd ',self.http.cmd
             self.http.output = json.loads(t.data)
             self.http.status = True
         else:
@@ -81,7 +84,10 @@ class senateHttp:
         
         self.controller_host = c.controller_host
         self.controller_port = c.controller_port
+        self.host = c.host
+        self.pid = c.pid
         
+        self.uuid = ''
         self.input = []
         
         self.output = []

@@ -390,3 +390,7 @@ alter table link add constraint uuid_check foreign key(uid) references scrapy(id
 把代理，当成普通的处理了。是的
 
 conf中，host和parent不能通过conf获取了。因为进程fork的问题。是的。进程fork的问题，导致了配置不同。但是，在运行中能否修改呢？算了。
+
+完成pynginx，ufs，以及scrapy的收尾工作。
+
+URLS_LIMIT 由客户端来处理。

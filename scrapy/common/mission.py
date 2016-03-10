@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from httplib import HTTPConnection
-
+from scrapy.globalx.static import REQUEST_TIMEOUT
 class Mission:
     
     def __init__(self,host,port):
@@ -13,7 +13,7 @@ class Mission:
         self.connection_flag = False
         self.readsize = 4096
  
-        self.timeout = 100
+        self.timeout = REQUEST_TIMEOUT
         
     def __enter__(self):
         self.connect()

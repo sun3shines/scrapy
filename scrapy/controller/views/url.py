@@ -11,7 +11,7 @@ from scrapy.controller.cache.node import nodeinc,nodeput,nodermv
 from scrapy.controller.db.proxyip import getproxyip
 from scrapy.globalx.static import URLS_LIMIT,PROC_WAIT,PROC_STABLE,PROC_SPEED
 from scrapy.controller.views.format import filter,printattrs
-from scrapy.controller.db.scrapy import uuid2id
+from scrapy.controller.db.scrapytask import uuid2id
 
 def dispatch(req):
     
@@ -21,9 +21,9 @@ def dispatch(req):
     host = param.get('host')
     pid = param.get('pid')
     uuid = param.get('uuid')
-    
     nodeput(host, pid)
     uid = uuid2id(conn, uuid)
+    print 'host , pid , finishids',host,pid,str(finishids)
     sets(conn,finishids,reset=False)
     attrs = gets(conn,uid,limit=URLS_LIMIT)
     

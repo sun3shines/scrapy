@@ -13,4 +13,5 @@ def remove(req):
     host = param.get('host')
     pid = param.get('pid')
     nodermv(host, pid)
+    print 'remove proc: ',host,pid
     return Response(status=200)

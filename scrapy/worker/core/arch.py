@@ -19,7 +19,6 @@ class Scrapy:
             p = self.getproc()(host,parent)
             p.create()
             p.start(self.uuid,self.starturl)
-            
         while True:
             if not p.send():
                 p.sleep()
@@ -27,7 +26,7 @@ class Scrapy:
             yield p
         
     def start(self,host,parent):
-    
+        print 'parent: ',parent
         time.sleep(0.5)
         # 关键是在这里，从子进程，切换会父进程了 
         p = None
@@ -40,7 +39,7 @@ class Scrapy:
             elif p.speed:
                 if p.allow:
                     if 0 == p.fork():
-                        self.start(p.host,p.path)
+                        self.start(p.c.host,p.st.path)
                         sys.exit(0)
             p.run()
     

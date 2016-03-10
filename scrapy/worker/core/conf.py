@@ -14,7 +14,7 @@ class Conf:
         self.trys = self.gettrytimes()
         self.interval = self.getsleepinterval()
         
-        self.pid = os.getpid()
+        self.pid = str(os.getpid())
         
         self.bfs = self.getbfs()
         self.dfs = self.getdfs()

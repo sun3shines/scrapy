@@ -7,7 +7,7 @@ sys.setdefaultencoding('utf-8')
 from BeautifulSoup import BeautifulSoup
 
 class Page(object):
-    def __init__(self,html,url,classes,uuid):
+    def __init__(self,html,url,uuid,classes):
         self.f = BeautifulSoup(html)
         self.positionclasses = classes
         self.uuid = uuid

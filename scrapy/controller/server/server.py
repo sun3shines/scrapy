@@ -22,13 +22,13 @@ from urllib import unquote
 from xml.sax import saxutils
 
 from eventlet import Timeout
-from webob import Request, Response
 
 from cloudcommon.common.utils import get_logger,  public
 from cloudcommon.common.constraints import check_utf8
 from cloudcommon.common.bufferedhttp import jresponse
 
 from scrapy.controller.route.urls import handlerequest
+from webob import Request, Response
 
 class ServerController(object):
     """WSGI controller for the account server."""

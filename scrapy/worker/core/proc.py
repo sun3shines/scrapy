@@ -9,7 +9,7 @@ from scrapy.worker.core.thread import call
 from scrapy.worker.core.fst import FSt,senateFSt
 from scrapy.worker.core.conf import Conf
 from scrapy.controller.db.url import puts
-from scrapy.controller.db.scrapy import putu,uuid2id
+from scrapy.controller.db.scrapytask import putu,uuid2id
 from scrapy.controller.db.table.lock.mysql import getdb
 from scrapy.utils.path import urlpath
 
@@ -23,7 +23,7 @@ class Proc:
         
     @property
     def empty(self):
-        return FSt(self.st).empty()
+        return FSt(self.st).empty
 
     @property
     def count(self):   
@@ -47,7 +47,7 @@ class Proc:
     
     @property
     def incr(self):
-        return FSt.incr(self.st)
+        return FSt(self.st).incr()
     
     @property
     def allow(self):
@@ -109,7 +109,9 @@ class Proc:
             self.c.new()
             call(self.http,self.getclasses())
             
-    def start(self,starturl,scrapyuuid):
+    def start(self,scrapyuuid,starturl):
+        
+        self.http.uuid = scrapyuuid
         
         try:
             db = getdb()

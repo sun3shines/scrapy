@@ -7,7 +7,7 @@ from cloudcommon.common.bufferedhttp import jresponse
 from cloudcommon.common.common.swob import Response
 from scrapy.globalx.dynamic import conn
 from scrapy.controller.db.url import puts
-from scrapy.controller.db.scrapy import uuid2id
+from scrapy.controller.db.scrapytask import uuid2id
 def urlmerge(req):
     
     uuid = req.headers.get('uuid')

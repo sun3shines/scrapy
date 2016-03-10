@@ -4,6 +4,7 @@ import os
 import fcntl
 import shutil
 from scrapy.globalx.static import ST_DIR
+import syslog
 
 class FSt:
 
@@ -13,7 +14,8 @@ class FSt:
     def put(self):
         if self.st.ancestor:
             self.load()
-        os.mkdir(self.st.path)
+        if not os.path.exists(self.st.path):
+            os.mkdir(self.st.path)
 
     def delete(self):
         os.rmdir(self.st.path)
@@ -52,7 +54,10 @@ class FSt:
     def load(self):
         if not os.path.exists(ST_DIR):
             os.mkdir(ST_DIR)
-            
+        
+        if not os.path.exists(self.st.root):
+            os.mkdir(self.st.root)    
+
         with open(self.st.lock, "w") as f: 
             f.write("1worker") 
 
@@ -67,6 +72,9 @@ class FSt:
     @property
     def level(self):
         return (len(self.st.path.split('/'))-1) 
+
+    def erro(self,pid,msg):
+        syslog.syslog(syslog.LOG_ERR,'erro process: '+pid +'  '+str(msg))
                
 class senateFSt:
     def __init__(self,c):
@@ -74,7 +82,9 @@ class senateFSt:
         self.parent = c.parent
         self.pid = c.pid
         self.total = c.total
-        
+
+        self.path = self.root = self.lock = ''
+
     @property
     def ancestor(self):
         return self.root == self.path

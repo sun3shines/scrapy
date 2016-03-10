@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from scrapy.controller.db.table.lock.mysql import getlock
-from scrapy.controller.db.table.scrapy import insertu,uuid2id
+from scrapy.controller.db.table.scrapytask import insertu,uuid2id
 
 def putu(conn,uuid,starturl):
     # 刚初始化的端口，由后台线程进行验证了。是的。
