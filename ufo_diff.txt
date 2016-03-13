@@ -394,3 +394,7 @@ conf中，host和parent不能通过conf获取了。因为进程fork的问题。�
 完成pynginx，ufs，以及scrapy的收尾工作。
 
 URLS_LIMIT 由客户端来处理。
+
+保存url，作为page作为文件来处理，如何？应该可以吧。哈哈。
+
+下一步，proxy模块的独立处理了。现在就告一段落吧。即每个url，都会有自己的proxy服务了。而不是从controller中获取了。即，再次，从controller中进行分离了。是的。分离服务了。
