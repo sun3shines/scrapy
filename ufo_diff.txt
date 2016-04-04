@@ -398,3 +398,10 @@ URLS_LIMIT 由客户端来处理。
 保存url，作为page作为文件来处理，如何？应该可以吧。哈哈。
 
 下一步，proxy模块的独立处理了。现在就告一段落吧。即每个url，都会有自己的proxy服务了。而不是从controller中获取了。即，再次，从controller中进行分离了。是的。分离服务了。
+
+理解为media资源。和link资源了。是的。或者proxy资源了。基本上就是这三种资源了。是的。然后下载呢，就是分开了。是的。使用独立的内容来下载了。是的。给media创建类型了？是的。如果是html，jpg，txt等类型。是的。 对应网站，csdn。是的。
+
+因此其所解析出来的内容，都是media了。是的。
+
+create table media(id bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,url text NOT NULL,time timestamp,state int NOT NULL,uid bigint NOT NULL);
+alter table media add constraint media_check foreign key(uid) references scrapy(id) on delete cascade on update cascade;
