@@ -2,6 +2,7 @@
 
 import socket
 from scrapy.common.requests.task import Url
+from scrapy.globalx.static import ACTIVE_URL
 
 def isActive(host,port):
     
@@ -17,7 +18,7 @@ def isActive(host,port):
 
 def htmlActive(host,port):
     try:
-        u = Url(host,port,'http://www.haodailiip.com/guoji/1',True)
+        u = Url(host,port,ACTIVE_URL,True)
         if 2 != int(u.status/100):
             return False
         return True

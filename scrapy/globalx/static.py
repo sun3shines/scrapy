@@ -7,7 +7,7 @@ PROC_BFS_LIMIT = 3  # 会限制进程子进程的数量了
 PROC_DFS_LIMIT = 5 
 TRY_TIMES = 3
 
-CONTROLLER_HOST = '192.168.36.201'
+CONTROLLER_HOST = '127.0.0.1'
 CONTROLLER_PORT = 7020
 
 ST_DIR = '/scrapy'
@@ -18,3 +18,12 @@ PROC_STABLE = 4
 PROC_SPEED = 8
 
 REQUEST_TIMEOUT = 5
+
+MYSQL_HOST = '127.0.0.1'
+MYSQL_PORT = 3306 
+MYSQL_USER = 'root'
+MYSQL_PASSWD = '111111'
+
+# ACTIVE_URL = 'http://www.haodailiip.com/guoji/1'
+ACTIVE_URL = 'http://mm3825.com/html/part/index17.htm'
+

@@ -9,6 +9,7 @@ from scrapy.controller.proxy.thread import ProxyWorker
 from scrapy.controller.db.proxyip import getproxyip
 def app_iter(conn):
     attrs = geti(conn, 0)
+    print len(attrs)
     for attr in attrs:
         yield (attr['id'],attr['ip'],attr['port'])  
         
@@ -22,9 +23,14 @@ def loop():
         while True:
             print 'again'
             remain = False
+            tds = []
             for id,host,port in app_iter(conn):
                 remain = True
-                ProxyWorker(conn,id,host,port).start()
+                tds.append(ProxyWorker(conn,id,host,port))
+            for td in tds:
+                td.start()
+            for td in tds:
+                td.join()
             if not remain:
                 print 'no more'
                 break

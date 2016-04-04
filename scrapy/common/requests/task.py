@@ -9,7 +9,7 @@ class Url(Task):
         self.port = port
         self.url = url.replace('http://','').replace('http:/','')
         self.agent = 'Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101 Firefox/38.0'
-
+        self.timeout = 25
         if p: 
             self.proxyget()
         else:
@@ -28,10 +28,10 @@ class Url(Task):
         return {'User-Agent':self.agent}
 
     def get(self):
-        self.resp = requests.get(self.getUrl(),headers=self.getHeaders())
+        self.resp = requests.get(self.getUrl(),headers=self.getHeaders(),timeout=self.timeout)
 
     def proxyget(self):   
-        self.resp = requests.get(self.getUrl(),headers=self.getHeaders(),proxies=self.getProxy())
+        self.resp = requests.get(self.getUrl(),headers=self.getHeaders(),proxies=self.getProxy(),timeout=self.timeout)
 
     @property
     def html(self):
@@ -43,9 +43,9 @@ class Url(Task):
 
 if __name__ == '__main__':
 
-    ip = '58.20.128.123'
+    ip = '122.96.59.104'
     port = '80'
-    u = Url(ip,port,'http://www.haodailiip.com/guoji/1')   
+    u = Url(ip,port,'http://mm3825.com/html/article/index12056.htm',p=False)   
 
     print u.status
     print u.html

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import MySQLdb
-
+from scrapy.globalx.static import MYSQL_HOST,MYSQL_PORT,MYSQL_USER,MYSQL_PASSWD
 class dbConn(object):
 
     def __init__(self,host,user,passwd,port,db):
@@ -125,4 +125,4 @@ class dbConn(object):
 
 def getDb():
 
-    return dbConn('192.168.36.3','root','111111',3306,'scrapy')
+    return dbConn(MYSQL_HOST,MYSQL_USER,MYSQL_PASSWD,MYSQL_PORT,'scrapy')

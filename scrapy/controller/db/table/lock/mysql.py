@@ -2,6 +2,7 @@
 import threading
 
 from scrapy.controller.db.table.mysql import dbConn
+from scrapy.globalx.static import MYSQL_HOST,MYSQL_PORT,MYSQL_USER,MYSQL_PASSWD
 
 class db(dbConn):
     def __init__(self,*args, **kwargs):
@@ -32,6 +33,6 @@ def getlock(conn):
       
 def getdb():
 
-    return db('192.168.36.3','root','111111',3306,'scrapy')
+    return db(MYSQL_HOST,MYSQL_USER,MYSQL_PASSWD,MYSQL_PORT,'scrapy')
 
 conn = getdb()
