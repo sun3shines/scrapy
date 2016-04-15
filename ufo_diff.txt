@@ -405,3 +405,23 @@ URLS_LIMIT 由客户端来处理。
 
 create table media(id bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,url text NOT NULL,time timestamp,state int NOT NULL,uid bigint NOT NULL);
 alter table media add constraint media_check foreign key(uid) references scrapy(id) on delete cascade on update cascade;
+
+find . -name '*.py'  | awk -F ':' '{print $1}' | xargs -i sed -i 's/scrapy.center/fastscrapy.center/g' {}
+
+find . -name '*.py'  | awk -F ':' '{print $1}' | xargs -i sed -i 's/scrapy.common/fastscrapy.common/g' {}
+
+find . -name '*.py'  | awk -F ':' '{print $1}' | xargs -i sed -i 's/scrapy.controller/fastscrapy.controller/g' {}
+
+find . -name '*.py'  | awk -F ':' '{print $1}' | xargs -i sed -i 's/scrapy.globalx/fastscrapy.globalx/g' {}
+
+find . -name '*.py'  | awk -F ':' '{print $1}' | xargs -i sed -i 's/scrapy.parse/fastscrapy.parse/g' {}
+
+find . -name '*.py'  | awk -F ':' '{print $1}' | xargs -i sed -i 's/scrapy.storage/fastscrapy.storage/g' {}
+
+find . -name '*.py'  | awk -F ':' '{print $1}' | xargs -i sed -i 's/scrapy.test/fastscrapy.test/g' {}
+
+find . -name '*.py'  | awk -F ':' '{print $1}' | xargs -i sed -i 's/scrapy.utils/fastscrapy.utils/g' {}
+
+find . -name '*.py'  | awk -F ':' '{print $1}' | xargs -i sed -i 's/scrapy.worker/fastscrapy.worker/g' {}
+
+find . -name '*.py'  | awk -F ':' '{print $1}' | xargs -i sed -i 's/cloudcommon/cloudlib/g' {}
